@@ -1,5 +1,7 @@
 body {
-  background-color: rgb(58, 129, 186);
+  /*background-color: rgb(58, 129, 186);*/
+  background-color: #DDD;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 @font-face {
@@ -9,16 +11,39 @@ body {
 
 h1 {
   font-family: akashi;
+  text-align: center;
+  margin-top: 3em;
+}
+
+.centered {
+  text-align: center;
+}
+
+.subtext {
+  font-size: 1.5em;
+}
+
+.name, .time {
+  width: 3em;
+}
+
+.submit {
+  display: block;
+  margin: 1em auto auto;
 }
 
 a {
   text-decoration: none;
-}
-
-.name {
-  width: 2em;
+  color: black;
 }
 
 .cta {
+  display: block;
   background-color: rgb(139, 171, 66);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.below {
+  margin-top: 3em;
 }
