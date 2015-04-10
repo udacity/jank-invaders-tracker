@@ -57,7 +57,7 @@
       // FIRE OFF THAT SHIT, THEN SHUT THAT SHIT DOWN WITH A CALLBACK
       // fb = new Firebase(firebasePath);
       console.log(playerName);
-
+      console.log(Firebase)
     } else {
     }
 
