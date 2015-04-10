@@ -19,55 +19,87 @@
     }
   }
 
-  // grab the input element and add an onsubmit handler
-
-  // grey out submit button on submit
-
   // give indication that score was sent
 
-  // time must be an int
-
-  // name must be a single char
-
   var submit = document.querySelector('button.submit');
-  var isLetter = /[a-zA-Z]/;
+
+  // TODO: cleaner regex logic
+  var hasLetter = /[a-zA-Z]/;
+  var hasNumber = /[0-9]/;
 
   var initials = getDomNodeArray('.name');
   initials.forEach(function(elem, index, arr) {
     elem.valid = true;
     elem.onchange = function() {
-      var valid = (elem.value.length <= 1 && elem.value.match(isLetter)) || elem.value === "";
+      var valid = (elem.value.length <= 1 && elem.value.match(hasLetter)) || elem.value === "";
       valid ? valid = true : valid = false;
       elem.valid = valid;
       outlineInitial(elem);
     }
   })
 
-  var playerName = "";
-  submit.onclick = function() {
-    var playerNameHasAtLeastOneChar = false;
-    var allValidChars = initials.every(function(elem, index, arr) {
-      if (elem.value !== "" && typeof elem.value === "string") playerNameHasAtLeastOneChar = true;
-      playerName = playerName + elem.value.toUpperCase();
-      return elem.valid;
-    })
+  var times = getDomNodeArray('.time');
+  times.forEach(function(elem, index, arr) {
+    elem.valid = true;
+    elem.onchange = function() {
+      var valid = (elem.value.match(hasNumber) && !elem.value.match(hasLetter)) || elem.value === "";
+      if (elem.value === "") elem.value = 0;
+      elem.valid = valid;
+      outlineInitial(elem);
+    }
+  })
 
-    if (allValidChars && playerNameHasAtLeastOneChar) {
-      submit.setAttribute('disabled', null);
-      // FIRE OFF THAT SHIT, THEN SHUT THAT SHIT DOWN WITH A CALLBACK
-      // fb = new Firebase(firebasePath);
-      console.log(playerName);
-      console.log(Firebase)
+  submit.onclick = function() {
+    var playerName = "";
+    var playerTime = 0;
+    
+    function nameLooksGood() {
+      var playerNameHasAtLeastOneChar = false;
+      var allValidChars = initials.every(function(elem, index, arr) {
+        if (elem.value !== "" && typeof elem.value === "string") playerNameHasAtLeastOneChar = true;
+        playerName = playerName + elem.value.toUpperCase();
+        return elem.valid;
+      })
+      return allValidChars && playerNameHasAtLeastOneChar;
+    };
+
+    function timeLooksGood() {
+      var allValidTimes = times.every(function(elem, index, arr) {
+        if (elem.value === "") elem.value = 0;
+        if (elem.id === 'mins') playerTime = playerTime + (parseInt(elem.value) * 60000);
+        if (elem.id === 'secs') playerTime = playerTime + (parseInt(elem.value) * 1000);
+        if (elem.id === 'ms') playerTime = playerTime + parseInt(elem.value);
+        return elem.valid;
+      })
+      return allValidTimes && (playerTime > 0);
+    }
+
+    if (nameLooksGood() && timeLooksGood()) {
+      var timestamp = Date.now();
+
+      var playerData = {
+        "name": playerName,
+        "time": playerTime,
+        "timestamp": timestamp
+      }
+
+      try {
+        fb = new Firebase(firebasePath);
+        fb.push(playerData, function(e) {
+          Firebase.goOffline();
+          popConfirmation();
+        });
+        submit.setAttribute('disabled', null);
+      } catch (e) {
+        popError();
+      }
     } else {
+      popProblemWithSubmission();
     }
 
     // pop a "THANKS FOR SUBMITTING DUDEEEEE" thingy
   };
   
 
-
-  var obj = {"name": "BEN", "time": 1, "timestamp": Date.now()}
-
-  // fb.push(obj);
 
 })();
