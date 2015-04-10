@@ -8,10 +8,14 @@ body {
   src: url(Akashi.ttf);
 }
 
-h1 {
-  font-family: akashi;
-  text-align: center;
+.cta {
   margin-top: 1em;
+  display: block;
+  background-color: rgb(139, 171, 66);
+  margin-left: auto;
+  margin-right: auto;
+  font-family: akashi;
+  font-size: 1.5em;
 }
 
 .centered {
@@ -50,16 +54,4 @@ h1 {
 a {
   text-decoration: none;
   color: black;
-}
-
-.cta {
-  display: block;
-  background-color: rgb(139, 171, 66);
-  margin-left: auto;
-  margin-right: auto;
-  font-family: akashi;
-}
-
-.below {
-  margin-top: 1em;
 }

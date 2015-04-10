@@ -81,7 +81,7 @@
   }
   function popConfirmation() {
     popSubmissionMessage({
-      "message": "Your score has been submitted! At the end of the lesson we'll show you how it stacks up against your classmates! Click 'Next' to continue.",
+      "message": "Your score has been submitted! Click 'Next' to continue.",
       "cssClass": "congrats"
     })
   }
