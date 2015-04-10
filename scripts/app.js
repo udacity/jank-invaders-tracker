@@ -115,17 +115,14 @@
     }
 
     function getUid() {
-      var udCookie = docCookies.getItem('UY-VISITOR-ID');
-      if (!udCookie) {
-        var jiUid;
-        if (docCookies.hasItem('ji-uid')) {
-          jiUid = docCookies.getItem('ji-uid')
-        } else {
-          jiUid =  playerName + playerTime + Date.now();
-          docCookies.setItem('ji-uid', jiUid);
-        }
+      var jiUid = "";
+      if (docCookies.hasItem('ji-uid')) {
+        jiUid = docCookies.getItem('ji-uid')
+      } else {
+        jiUid = playerName + playerTime + Date.now();
+        docCookies.setItem('ji-uid', jiUid);
       }
-      return udCookie || jiUid || "missing";
+      return jiUid || "missing";
     }
 
     if (nameLooksGood() && timeLooksGood()) {
