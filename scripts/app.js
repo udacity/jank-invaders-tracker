@@ -18,9 +18,6 @@
       elem.style.outline = "";
     }
   }
-
-  // give indication that score was sent
-
   var submit = document.querySelector('button.submit');
 
   // TODO: cleaner regex logic
@@ -44,6 +41,8 @@
     elem.onchange = function() {
       var valid = (elem.value.match(hasNumber) && !elem.value.match(hasLetter)) || elem.value === "";
       if (elem.value === "") elem.value = 0;
+      if (elem.id === 'ms' && elem.value > 999) valid = false;
+      if (elem.id === 'secs' && elem.value > 59) valid = false;
       elem.valid = valid;
       outlineInitial(elem);
     }
@@ -78,18 +77,25 @@
       var message = data.message;
       var cssClass = data.cssClass;
 
-      if (!document.querySelector('.submission-message')) {
-        var d = document.createElement('div');
+      var d = document.querySelector('.submission-message');
+      if (!d) {
+        d = document.createElement('div');
         d.classList.add('submission-message');
+        document.querySelector('.score-entry').appendChild(d);
       }
-      d.classList.toggle(cssClass);
+      
+      // TODO: ewwww
+      if (d.classList.contains('congrats')) d.classList.remove('congrats');
+      if (d.classList.contains('error')) d.classList.remove('error');
+      if (d.classList.contains('user-error')) d.classList.remove('user-error');
+      d.classList.add(cssClass);
+
       d.innerHTML = message;
-      document.querySelector('.score-entry').appendChild(d);
     }
 
     function popConfirmation() {
       popSubmissionMessage({
-        "message": "Your score has been submitted! At the end of the lesson, we'll show you how you did! Click 'Next' to continue.",
+        "message": "Your score has been submitted! At the end of the lesson we'll show you how it stacks up against your classmates! Click 'Next' to continue.",
         "cssClass": "congrats"
       })
     }
@@ -103,35 +109,54 @@
 
     function popUserProblemWithSubmission() {
       popSubmissionMessage({
-        "message": "Something doesn't look right? Did you fill in at least 1 initial and your time?",
+        "message": "Something doesn't look right? Did you fill in at least one initial and your time?",
         "cssClass": "user-error"
       })
     }
 
+    function getUid() {
+      var udCookie = docCookies.getItem('UY-VISITOR-ID');
+      if (!udCookie) {
+        var jiUid;
+        if (docCookies.hasItem('ji-uid')) {
+          jiUid = docCookies.getItem('ji-uid')
+        } else {
+          jiUid =  playerName + playerTime + Date.now();
+          docCookies.setItem('ji-uid', jiUid);
+        }
+      }
+      return udCookie || jiUid || "missing";
+    }
+
     if (nameLooksGood() && timeLooksGood()) {
       var timestamp = Date.now();
+      var uid = getUid();
 
       var playerData = {
         "name": playerName,
         "time": playerTime,
-        "timestamp": timestamp
+        "timestamp": timestamp,
+        "uid": uid
       }
 
+      fb = new Firebase(firebasePath);
       try {
-        fb = new Firebase(firebasePath);
         fb.push(playerData, function(e) {
+          if (e) {
+            popError();
+          } else {
+            popConfirmation();
+            submit.setAttribute('disabled', null);
+          }
           Firebase.goOffline();
-          popConfirmation();
-          submit.setAttribute('disabled', null);
         });
       } catch (e) {
+        console.log("Something weird happened.")
         popError();
       }
     } else {
       popUserProblemWithSubmission();
     }
-
-    // pop a "THANKS FOR SUBMITTING DUDEEEEE" thingy
   };
   
 
