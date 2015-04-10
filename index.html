@@ -4,26 +4,25 @@
   <title></title>
   <link rel="stylesheet" href="css/styles.css">
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-  <script src="scripts/app.js"></script>
+  <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
 </head>
 <body>
   <h1 class="header">Jank Invaders Scoreboard</h1>
   <p class="subtext centered">How did you do?</p>
-  <div class="score-entry">
-    <form class="centered">
-      <p>Your Initials</p>
-      <input class="name" type="text">
-      <input class="name" type="text">
-      <input class="name" type="text">
-      <p>Your Time</p>
-      <input class="time" type="text" value="M">
-      <input class="time" type="text" value="SS">
-      <input class="time" type="text" value="ms">
-      <input class="submit" type="submit" value="Submit Score!">
-    </form>
+  <div class="score-entry centered">
+    <p>Your Initials</p>
+    <input class="name" type="text">
+    <input class="name" type="text">
+    <input class="name" type="text">
+    <p>Your Time</p>
+    <input class="time" type="text" value="mins">:
+    <input class="time" type="text" value="secs">:
+    <input class="time" type="text" value="ms">
+    <button class="submit" value="Submit Score!">Submit Score!</button>
   </div>
   <div class="below">
     <p class="centered">Haven't had a chance to play yet?</p>
     <button class="cta"><a href="http://jakearchibald.github.io/jank-invaders/">Play Jank Invaders</a></button>
   </div>
+  <script src="scripts/app.js"></script>
 </body>
