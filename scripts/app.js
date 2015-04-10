@@ -74,6 +74,40 @@
       return allValidTimes && (playerTime > 0);
     }
 
+    function popSubmissionMessage(data) {
+      var message = data.message;
+      var cssClass = data.cssClass;
+
+      if (!document.querySelector('.submission-message')) {
+        var d = document.createElement('div');
+        d.classList.add('submission-message');
+      }
+      d.classList.toggle(cssClass);
+      d.innerHTML = message;
+      document.querySelector('.score-entry').appendChild(d);
+    }
+
+    function popConfirmation() {
+      popSubmissionMessage({
+        "message": "Your score has been submitted! At the end of the lesson, we'll show you how you did! Click 'Next' to continue.",
+        "cssClass": "congrats"
+      })
+    }
+
+    function popError() {
+      popSubmissionMessage({
+        "message": "Looks like something went wrong :( Please try again later. In the meantime, click 'Next' to learn more about building performant web apps!",
+        "cssClass": "error"
+      })
+    }
+
+    function popUserProblemWithSubmission() {
+      popSubmissionMessage({
+        "message": "Something doesn't look right? Did you fill in at least 1 initial and your time?",
+        "cssClass": "user-error"
+      })
+    }
+
     if (nameLooksGood() && timeLooksGood()) {
       var timestamp = Date.now();
 
@@ -88,13 +122,13 @@
         fb.push(playerData, function(e) {
           Firebase.goOffline();
           popConfirmation();
+          submit.setAttribute('disabled', null);
         });
-        submit.setAttribute('disabled', null);
       } catch (e) {
         popError();
       }
     } else {
-      popProblemWithSubmission();
+      popUserProblemWithSubmission();
     }
 
     // pop a "THANKS FOR SUBMITTING DUDEEEEE" thingy

@@ -1,5 +1,4 @@
 body {
-  /*background-color: rgb(58, 129, 186);*/
   background-color: #DDD;
   font-family: 'Source Sans Pro', sans-serif;
 }
@@ -21,6 +20,18 @@ h1 {
 
 .subtext {
   font-size: 1.5em;
+}
+
+.congrats {
+  color: rgb(117, 155, 30);
+}
+
+.error {
+  color: rgb(199, 31, 31);
+}
+
+.user-error {
+  color: rgb(103, 120, 205);
 }
 
 .name, .time {
