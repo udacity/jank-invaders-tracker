@@ -10,16 +10,13 @@
   <button class="cta"><a href="http://jakearchibald.github.io/jank-invaders/" target="_blank">Play Jank Invaders!</a></button>
   <p class="centered">You'll get a score when you finish. Type in your score below and we'll show you how your score stacks up at the end of the lesson!</p>
   <p class="centered">Good luck! Blow up the janky ships!</p>
-  <p class="subtext centered">How did you do?</p>
   <div class="score-entry centered">
     <p>Your Initials</p>
-    <input class="name" type="text">
-    <input class="name" type="text">
-    <input class="name" type="text">
+    <input class="name" maxlength="3" type="text">
     <p>Your Time</p>
-    <input id="mins" class="time" type="text" placeholder="mins">:
-    <input id="secs" class="time" type="text" placeholder="secs">:
-    <input id="ms" class="time" type="text" placeholder="ms">
+    <input id="mins" class="time" maxlength="2" type="text" placeholder="mins">:
+    <input id="secs" class="time" maxlength="2" type="text" placeholder="secs">:
+    <input id="ms" class="time" maxlength="3" type="text" placeholder="ms">
     <button class="submit" value="Submit Score!">Submit Score!</button>
   </div>
   <script src="scripts/cookies.js"></script>

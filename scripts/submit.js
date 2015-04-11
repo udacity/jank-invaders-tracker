@@ -2,14 +2,17 @@
   var submit = document.querySelector('button.submit');
   var initials = getDomNodeArray('.name');
   var times = getDomNodeArray('.time');
-  var playerName = "";
-  var playerTime = 0;
+  App.playerName = "";
+  App.playerTime = 0;
 
   function getDomNodeArray(selector) {
     var elemCollection = document.querySelectorAll(selector);
     var elemArray = Array.prototype.slice.apply(elemCollection);
     return elemArray;
   };
+  function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
   function outlineInitial(elem, valid) {
     if (!elem.valid) {
       elem.style.outline = "red solid 2px";
@@ -23,7 +26,7 @@
   initials.forEach(function(elem, index, arr) {
     elem.valid = true;
     elem.onchange = function() {
-      var valid = (elem.value.length <= 1 && elem.value.match(hasLetter)) || elem.value === "";
+      var valid = (elem.value.length <= 3 && elem.value.length >=1 && elem.value.match(hasLetter));
       valid ? valid = true : valid = false;
       elem.valid = valid;
       outlineInitial(elem);
@@ -32,7 +35,7 @@
   times.forEach(function(elem, index, arr) {
     elem.valid = true;
     elem.onchange = function() {
-      var valid = (elem.value.match(hasNumber) && !elem.value.match(hasLetter)) || elem.value === "";
+      var valid = isNumber(elem.value);
       if (elem.value === "") elem.value = 0;
       if (elem.id === 'ms' && elem.value > 999) valid = false;
       if (elem.id === 'secs' && elem.value > 59) valid = false;
@@ -44,7 +47,7 @@
     var playerNameHasAtLeastOneChar = false;
     var allValidChars = initials.every(function(elem, index, arr) {
       if (elem.value !== "" && typeof elem.value === "string") playerNameHasAtLeastOneChar = true;
-      playerName = playerName + elem.value.toUpperCase();
+      App.playerName = App.playerName + elem.value.toUpperCase();
       return elem.valid;
     })
     return allValidChars && playerNameHasAtLeastOneChar;
@@ -53,12 +56,12 @@
   function timeLooksGood() {
     var allValidTimes = times.every(function(elem, index, arr) {
       if (elem.value === "") elem.value = 0;
-      if (elem.id === 'mins') playerTime = playerTime + (parseInt(elem.value) * 60000);
-      if (elem.id === 'secs') playerTime = playerTime + (parseInt(elem.value) * 1000);
-      if (elem.id === 'ms') playerTime = playerTime + parseInt(elem.value);
+      if (elem.id === 'mins') App.playerTime = App.playerTime + (parseInt(elem.value) * 60000);
+      if (elem.id === 'secs') App.playerTime = App.playerTime + (parseInt(elem.value) * 1000);
+      if (elem.id === 'ms') App.playerTime = App.playerTime + parseInt(elem.value);
       return elem.valid;
     })
-    return allValidTimes && (playerTime > 0);
+    return allValidTimes && (App.playerTime > 0);
   }
   function popSubmissionMessage(data) {
     var message = data.message;
@@ -99,15 +102,15 @@
   }
 
   submit.onclick = function() {
-    playerName = "";
-    playerTime = 0;
+    App.playerName = "";
+    App.playerTime = 0;
     if (nameLooksGood() && timeLooksGood()) {
       var timestamp = Date.now();
       var uid = App.getUid();
 
       var playerData = {
-        "name": playerName,
-        "time": playerTime,
+        "name": App.playerName,
+        "time": App.playerTime,
         "timestamp": timestamp,
         "uid": uid
       }
