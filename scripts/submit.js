@@ -1,9 +1,13 @@
+/*
+
+Needs logic to reject scores that are too low
+
+*/
+
 (function() {
   var submit = document.querySelector('button.submit');
   var initials = getDomNodeArray('.name');
   var times = getDomNodeArray('.time');
-  App.playerName = "";
-  App.playerTime = 0;
 
   function getDomNodeArray(selector) {
     var elemCollection = document.querySelectorAll(selector);
@@ -44,6 +48,7 @@
     }
   })
   function nameLooksGood() {
+    App.playerName = "";
     var playerNameHasAtLeastOneChar = false;
     var allValidChars = initials.every(function(elem, index, arr) {
       if (elem.value !== "" && typeof elem.value === "string") playerNameHasAtLeastOneChar = true;
@@ -54,6 +59,7 @@
   };
 
   function timeLooksGood() {
+    App.playerTime = 0;
     var allValidTimes = times.every(function(elem, index, arr) {
       if (elem.value === "") elem.value = 0;
       if (elem.id === 'mins') App.playerTime = App.playerTime + (parseInt(elem.value) * 60000);
@@ -102,12 +108,9 @@
   }
 
   submit.onclick = function() {
-    App.playerName = "";
-    App.playerTime = 0;
     if (nameLooksGood() && timeLooksGood()) {
       var timestamp = Date.now();
-      var uid = App.getUid();
-
+      var uid = App.getUid(App.playerName, App.playerTime);
       var playerData = {
         "name": App.playerName,
         "time": App.playerTime,

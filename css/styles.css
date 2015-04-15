@@ -31,6 +31,10 @@ input {
   text-align: center;
 }
 
+.rank-display {
+  font-family: akashi;
+}
+
 .subtext {
   font-size: 1.5em;
 }
@@ -49,6 +53,47 @@ input {
 
 .name, .time {
   width: 3em;
+}
+
+#competitors {
+  font-family: akashi;
+}
+
+.scoreboard {
+  height: 7em;
+  width: 20em;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: scroll;
+  border: 1px solid black;
+  background-color: #BBB;
+  text-align: left;
+}
+
+.score-name {
+  margin-left: 4em;
+  min-width: 3em;
+  margin-right: 1em;
+  display: inline-block;
+}
+
+.score-rank {
+  width: 3em;
+  margin-right: 1em;
+  display: inline-block;
+  text-align: center;
+  /*margin-right: 1.5em;*/
+}
+
+.score-time {
+  width: 4em;
+  display: inline-block;
+  text-align: center;
+}
+
+.you {
+  color: #293;
+  /*font-size: 1.1em;*/
 }
 
 .name {

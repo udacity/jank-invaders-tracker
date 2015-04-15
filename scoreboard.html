@@ -7,14 +7,18 @@
   <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
 </head>
 <body>
-  <button class="cta"><a href="http://jakearchibald.github.io/jank-invaders/" target="_blank">Play Jank Invaders!</a></button>
   <h2 class="centered">Leaderboard</h2>
-  <div class="board">
-    <h3 class="centered">Your Score (# / total)</h3>
-    <div class="score"></div>
-    <h3 class="centered">Your Competitors</h3>
-    <div class="competitors"></div>
+  <h3 class="centered">Your Rank</h3>
+  <div id="rank"></div>
+  <h3 class="centered">Your Competitors</h3>
+  <div id="competitors" class="centered">
+    <span>Name</span>
+    <span>Rank</span>
+    <span>Time</span>
+    <div class="scoreboard"></div>
   </div>
+  <p class="centered">Haven't had enough?</p>
+  <button class="cta"><a href="http://jakearchibald.github.io/jank-invaders/" target="_blank">Play Jank Invaders!</a></button>
   <script src="scripts/cookies.js"></script>
   <script src="scripts/app.js"></script>
   <script src="scripts/scoreboard.js"></script>
