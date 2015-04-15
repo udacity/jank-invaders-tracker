@@ -25,6 +25,7 @@ h2 {
 input {
   font-size: 1.25em;
   font-family: akashi;
+  text-align: center;
 }
 
 .centered {
