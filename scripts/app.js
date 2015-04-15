@@ -1,5 +1,5 @@
 var App = (function() {
-  var firebasePath = "https://burning-fire-5340.firebaseio.com/leaderboard";
+  var firebasePath = "https://udacity.firebaseio.com/leaderboard";
   var playerName = "";
   var playerTime = 0;
   var fb = undefined;

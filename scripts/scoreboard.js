@@ -44,11 +44,9 @@ Your score is the 4th down in the list
     r.classList.add('score-rank');
     t.classList.add('score-time');
 
-    if (e.name.length < 3) e.name = " " + e.name;
-
     n.innerHTML = e.name;
     r.innerHTML = e.rank;
-    t.innerHTML = e.time;
+    t.innerHTML = parseInt(e.time / 60);
 
     entry.appendChild(n);
     entry.appendChild(r);
